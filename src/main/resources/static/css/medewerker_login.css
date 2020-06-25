@@ -1,0 +1,76 @@
+html,body{
+    margin:0;
+    padding: 0;
+    height: 100%;
+}
+body{
+    background: burlywood;
+    font-family: 'Montserrat', sans-serif;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    line-height: 1.6;
+    min-height: 100vh;
+    color: white;
+}
+form {
+    width: 400px;
+    height: 400px;
+    background: #e6e6e6;
+    border-radius: 8px;
+    box-shadow: 0 0 40px -10px #000;
+    margin: calc(15vh - 220px) auto;
+    padding: 40px 60px;
+    max-width: calc(100vw - 40px);
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    position: relative;
+    margin-top: 50px;
+}
+input {
+    padding: 15px;
+    margin: 5px 0 25px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    font-size: 16px;
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+}
+
+input:focus{
+    background-color: #ddd;
+    outline: none;
+}
+
+
+.button {
+    border: none;
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    margin: 20px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    opacity: 0.9;
+    border-radius: 5px;
+}
+.button:hover{
+    opacity: 1;
+}
+.button_position{
+    text-align: center;
+}
+h2{
+    color:darkblue;
+    padding: 6px 12px;
+
+}

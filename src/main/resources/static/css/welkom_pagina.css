@@ -1,0 +1,78 @@
+html,body{
+    margin:0;
+    padding: 0;
+    height: 100%;
+}
+body{
+    background: burlywood;
+    font-family: 'Montserrat', sans-serif;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    line-height: 1.6;
+    min-height: 100vh;
+    color: white;
+}
+h1{
+    text-align: center;
+    color: white;
+    background-color: darkgrey;
+    padding: 6px 12px;
+    border-radius: 5px;
+}
+/*h2{*/
+/*    text-align: center;*/
+/*    color: aliceblue;*/
+/*    background-color:gray;*/
+/*    padding: 14px 20px;*/
+/*    margin: 10px 2px;*/
+/*    margin-bottom: 30px;*/
+/*    border-radius: 5px;*/
+/*}*/
+.button{
+    border: none;
+    color:white;
+    position: relative;
+    display: inline-block;
+    margin: 15px 1px;
+    padding: 10px 80px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 15px;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #4CAF50;
+}
+.button:hover{
+    opacity: 1;
+}
+
+.button_position{
+    background-color: tomato;
+    margin-top: 20px;
+    color: white;
+    font-size: 14px;
+    padding: 10px 24px;
+    line-height: 20px;
+    opacity: 0.9;
+
+}
+
+form {
+    width: 500px;
+    height: 820px;
+    background: #e6e6e6;
+    border-radius: 8px;
+    box-shadow: 0 0 40px -10px #000;
+    margin: calc(15vh - 220px) auto;
+    padding: 10px 60px;
+    max-width: calc(100vw - 40px);
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    position: relative;
+    margin-top: 50px;
+}

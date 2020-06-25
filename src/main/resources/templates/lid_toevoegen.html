@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lid toevoegen</title>
+    <link rel="stylesheet" type="text/css" th:href="@{css/lid_toevoegen.css}">
+
+</head>
+<body>
+<center>
+    <h1> Himalaya Bibliotheek</h1>
+
+<form th:action="@{/opslaan_lid}" method="post" th:object="${nieuwStudent}">
+    <h2> Lid toevoegen</h2>
+    <label>Studentnummer</label>
+    <input required th:field="*{student_nr}">
+    <label>Studentnaam</label>
+    <input required th:field="*{naam}">
+    <label>Geboortedatum</label>
+    <input required type="date" th:field="*{geboortedatum}">
+
+    <div class="button_position">
+        <button class="button" style="background-color: tomato" name="terug" type="button" onclick="history.back()">Annuleren</button>
+        <button class="button" style="background-color: #28a745" name="submit" value="Inloggen" type="submit">Opslaan</button>
+    </div>
+
+</form>
+</center>
+
+
+</body>
+</html>
