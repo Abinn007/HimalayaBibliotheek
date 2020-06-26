@@ -5,7 +5,7 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "Uitlenen")
 public class Uitlenen {
     @Id
     @GeneratedValue

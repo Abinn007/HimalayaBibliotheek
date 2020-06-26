@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uitlening lijst</title>
+    <link rel="stylesheet" type="text/css" th:href="@{css/algemeenTabel.css}">
+
+</head>
+<body>
+<div align="center">
+    <h1>Himalaya Bibliotheek</h1><br>
+    <form th:action="@{/uitlenigLijst}" method="get" th:object="${uitleningLijst}">
+        <table>
+            <tr>
+                <th colspan="7" style="background-color:#32A9EE; color:white; padding:1px; font-size:20px">
+                    <p>Overzicht Uitlening</p>
+                </th>
+            </tr>
+            <tr style="background-color:darkseagreen;color:white;font-size: 17px">
+                <th>S.nr.</th>
+                <th style="text-align: left">Datum Uitgeleend</th>
+                <th>Datum TerugGebracht</th>
+                <th>BoekID</th>
+                <th>Boek&nbsp;Title</th>
+                <th>LidNr</th>
+                <th>Lid&nbsp;naam</th>
+            </tr>
+            <tr th:each="uitlening,iterationStatus: ${uitleningLijst}">
+                <td style="text-align: center" th:text="${iterationStatus.count}"></td>
+<!--                <td th:text="${uitlening.id}"></td> -->
+                <td th:text="${uitlening.datumUitlening}"></td>
+                <td th:text="${uitlening.datumTerugGebracht}"></td>
+                <td th:text="${uitlening.boek.getId()}"></td>
+                <td th:text="${uitlening.boek.getTitle()}"></td>
+                <td th:text="${uitlening.student.getLidnummer()}"></td>
+                <td th:text="${uitlening.student.getNaam()}"></td>
+            </tr>
+        </table>
+        <button class="button" name="terug" value="terug" type="button" onclick="history.back()">Terug</button>
+    </form>
+</div>
+</body>
+</html>

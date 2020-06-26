@@ -3,7 +3,7 @@ package com.bibliotheek.himalaya.model;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "Student")
 public class Student {
     @Id
     @GeneratedValue

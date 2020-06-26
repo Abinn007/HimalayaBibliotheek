@@ -6,6 +6,7 @@ import com.bibliotheek.himalaya.model.Uitlenen;
 import com.bibliotheek.himalaya.service.BoekService;
 import com.bibliotheek.himalaya.service.StudentService;
 import com.bibliotheek.himalaya.service.UitlenenService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class uitlenenBoekController {
+public class UitlenenBoekController {
 
     @Autowired
     private BoekService boekService;
@@ -67,5 +68,34 @@ public class uitlenenBoekController {
         mav.addObject("error", "Er is geen boek met dit isbn!");
         return mav;
     }
+
+    @GetMapping("/uitlenigLijst")
+    public String uitleningLijstHandler(Model model) {
+        model.addAttribute("uitleningLijst", uitlenenService.getAllUitlenen());
+        return "uitlenenLijst";
+
+    }
+
+    @GetMapping("/boek_terugbrengen")
+    public ModelAndView handelTerugbrengenBoek() {
+        ModelAndView mav = new ModelAndView("terugbrengen_boek");
+        mav.addObject("uitlenen",new Uitlenen());
+        mav.addObject("boek", new Boek());
+        return mav;
+    }
+
+    @PostMapping("/boek_terugbrengen_opslaan")
+    public ModelAndView boekTerugBrengenHandler(@RequestParam String datumTerugGebracht, @RequestParam int isbn) {
+        ModelAndView mav = new ModelAndView("terugbrengen_boek_opslaan");
+
+        Boek boek = boekService.getBoekByIsdn(isbn);
+        Uitlenen uitlenen = uitlenenService.findByBoek(boek);
+        uitlenen.setDatumTerugGebracht(datumTerugGebracht);
+        uitlenenService.terugbrengenBoek(uitlenen);
+        mav.addObject("uitlenen",uitlenen);
+        return mav;
+
+    }
+
 
 }

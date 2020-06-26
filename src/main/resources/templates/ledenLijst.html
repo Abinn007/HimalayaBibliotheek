@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leden lijst</title>
+    <link rel="stylesheet" type="text/css" th:href="@{css/algemeenTabel.css}">
+
+</head>
+<body>
+<div align="center">
+    <h1>Himalaya Bibliotheek</h1><br>
+    <form th:action="@{/ledenLijst}" method="get" th:object="${ledenLijst}">
+        <table>
+            <tr>
+                <th colspan="5" style="background-color:#32A9EE; color:white; padding:1px; font-size:20px">
+                    <p>Leden Lijst</p>
+                </th>
+            </tr>
+            <tr style="background-color:darkseagreen;color:white;font-size: 17px">
+                <th>S.nr.</th>
+                <th style="text-align: left">Lidnummer</th>
+                <th>geboortedatum</th>
+                <th>naam</th>
+                <th>studentNr</th>
+            </tr>
+            <tr th:each="student,iterationStatus: ${ledenLijst}">
+                <td style="text-align: center" th:text="${iterationStatus.count}"></td>
+                <td th:text="${student.lidnummer}"></td>
+                <td th:text="${student.geboortedatum}"></td>
+                <td th:text="${student.naam}"></td>
+                <td th:text="${student.student_nr}"></td>
+            </tr>
+        </table>
+        <button class="button" name="terug" value="terug" type="button" onclick="history.back()">Terug</button>
+    </form>
+</div>
+</body>
+</html>

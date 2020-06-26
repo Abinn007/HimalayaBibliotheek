@@ -13,8 +13,11 @@ public interface BoekRepository extends JpaRepository<Boek, Integer> {
 
     Boek findBoekByIsbn(int isbn);
 
-    @Query(value = "SELECT * FROM Boek", nativeQuery = true)
-    List<Boek> boekenLijst();
+    @Query(value = "SELECT * FROM Boek WHERE geleend = true", nativeQuery = true)
+    List<Boek> geleendBoekenLijst();
+
+    @Query(value = "SELECT * FROM Boek WHERE geleend = false", nativeQuery = true)
+    List<Boek> nietGeleendBoekenLijst();
 
     void removeBoekByIsbn(int isbn);
 

@@ -5,6 +5,8 @@ import com.bibliotheek.himalaya.repositories.BoekRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BoekService {
     @Autowired
@@ -30,4 +32,14 @@ public class BoekService {
         boekRepository.save(boek);
     }
 
+    public List<Boek> getAllBoeken() {
+        return boekRepository.findAll();
+    }
+
+    public  List<Boek> geleendBoekenLijst() {
+        return boekRepository.geleendBoekenLijst();
+    }
+    public  List<Boek> nietGeleendBoekenLijst() {
+        return boekRepository.nietGeleendBoekenLijst();
+    }
 }

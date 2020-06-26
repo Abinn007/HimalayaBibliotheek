@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "Boek")
 public class Boek {
     @Id
     @GeneratedValue
@@ -13,7 +13,7 @@ public class Boek {
     private int isbn;
     private boolean geleend;
 
-    @OneToMany
+    @OneToMany(mappedBy = "boek", cascade = {CascadeType.ALL})
     private List<Uitlenen> uitlenenList;
 
     @ManyToMany(mappedBy= "boeken")
