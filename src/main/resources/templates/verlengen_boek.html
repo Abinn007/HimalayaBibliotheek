@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Boek verlengen</title>
+    <link rel="stylesheet" type="text/css" th:href="@{css/uitlenen_boek.css}">
+</head>
+<body>
+<h1>Himalaya Bibliotheek</h1>
+<form th:action="@{/boek_verlengen_opslaan}" method="post">
+    <h2>Boek verlengen</h2>
+
+    <label>ISBN</label><br>
+    <input required th:object="${boek}" th:field="*{isbn}">
+
+    <div class="button_position">
+        <button class="button" style="background-color: tomato"  onclick="history.back()">Annuleren</button>
+        <button class="button" style="background-color: #28a745" name="submit" value="opslaan" type="submit">Verlengen</button>
+    </div>
+</form>
+</body>
+</html>

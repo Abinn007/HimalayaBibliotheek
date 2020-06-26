@@ -13,24 +13,25 @@
     <form th:action="@{/uitlenigLijst}" method="get" th:object="${uitleningLijst}">
         <table>
             <tr>
-                <th colspan="7" style="background-color:#32A9EE; color:white; padding:1px; font-size:20px">
+                <th colspan="8" style="background-color:#32A9EE; color:white; padding:1px; font-size:20px">
                     <p>Overzicht Uitlening</p>
                 </th>
             </tr>
             <tr style="background-color:darkseagreen;color:white;font-size: 17px">
                 <th>S.nr.</th>
-                <th style="text-align: left">Datum Uitgeleend</th>
-                <th>Datum TerugGebracht</th>
+                <th style="text-align: left">Datum uitgeleend</th>
+                <th>Datum teruggebracht</th>
+                <th>Datum max&nbsp;uitlening</th>
                 <th>BoekID</th>
-                <th>Boek&nbsp;Title</th>
+                <th>Boek&nbsp;title</th>
                 <th>LidNr</th>
                 <th>Lid&nbsp;naam</th>
             </tr>
             <tr th:each="uitlening,iterationStatus: ${uitleningLijst}">
                 <td style="text-align: center" th:text="${iterationStatus.count}"></td>
-<!--                <td th:text="${uitlening.id}"></td> -->
                 <td th:text="${uitlening.datumUitlening}"></td>
                 <td th:text="${uitlening.datumTerugGebracht}"></td>
+                <td th:text="${uitlening.datumMaxUitlenen}"></td>
                 <td th:text="${uitlening.boek.getId()}"></td>
                 <td th:text="${uitlening.boek.getTitle()}"></td>
                 <td th:text="${uitlening.student.getLidnummer()}"></td>

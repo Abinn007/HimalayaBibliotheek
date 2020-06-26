@@ -2,21 +2,21 @@ package com.bibliotheek.himalaya.service;
 
 import com.bibliotheek.himalaya.model.Boek;
 import com.bibliotheek.himalaya.model.Uitlenen;
-import com.bibliotheek.himalaya.repositories.BoekRepository;
 import com.bibliotheek.himalaya.repositories.UitlenenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class UitlenenService {
+
+    private static final int MAX_UITLENEN_DATUM = 15;
+
     @PersistenceContext
     private EntityManager em;
 
@@ -33,20 +33,42 @@ public class UitlenenService {
     public List<Uitlenen> getAllUitlenen(){
         return uitlenenRepository.findAll();
     }
+
     public Uitlenen findByBoek(Boek boek){
         return uitlenenRepository.findByBoek(boek);
     }
 
-    public Uitlenen findByBoekId(int boekId){
-       return uitlenenRepository.findByBoekId(boekId);
-    }
-
     @Transactional
     public void terugbrengenBoek(Uitlenen uitlenen) {
-        Boek boek = boekService.getBoekByIsdn(uitlenen.getBoek().getIsbn());
+        Boek boek = boekService.getBoekByIsbn(uitlenen.getBoek().getIsbn());
         boek.setGeleend(false);
         save(uitlenen);
         em.persist(uitlenen);
     }
+
+    public Uitlenen findByBoekId (int boekId) {
+        List<Uitlenen> uitlenenList = uitlenenRepository.findByBoekId(boekId);
+        Uitlenen uitlenen = null;
+        for (Uitlenen value : uitlenenList) {
+            if (value.getDatumTerugGebracht() == null) {
+                uitlenen = value;
+            }
+
+        }
+        return uitlenen;
+    }
+
+
+    @Transactional
+    public String verlengenBoek(Uitlenen uitlenen) {
+        LocalDate parsedDatum = LocalDate.parse(uitlenen.getDatumMaxUitlenen());
+        String nieuweMaxLeningDatum =(parsedDatum.plusDays(MAX_UITLENEN_DATUM)).toString();
+        uitlenen.setDatumMaxUitlenen(nieuweMaxLeningDatum);
+        save(uitlenen);
+        em.persist(uitlenen);
+        return nieuweMaxLeningDatum;
+    }
+
+
 
 }

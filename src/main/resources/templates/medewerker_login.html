@@ -14,6 +14,9 @@
     <input type="text" placeholder="Gebruikersnaam" name="gebruikersnaam" required>
 
     <input type="password" placeholder="Wachtwoord" name="wachtwoord" required>
+        <div style="font-size: 16px;color: red">
+            <span  th:utext="${login_error}"></span>
+        </div>
 
     <div class="button_position">
     <button class="button" style="background-color: tomato" name="terug" value="home" type="button" onclick="history.back()" >Annuleren</button>

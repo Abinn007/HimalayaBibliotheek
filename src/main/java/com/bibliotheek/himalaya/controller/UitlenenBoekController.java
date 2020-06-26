@@ -6,15 +6,17 @@ import com.bibliotheek.himalaya.model.Uitlenen;
 import com.bibliotheek.himalaya.service.BoekService;
 import com.bibliotheek.himalaya.service.StudentService;
 import com.bibliotheek.himalaya.service.UitlenenService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+
 @Controller
 public class UitlenenBoekController {
+    private static final int MAX_UITLENEN_DATUM = 15;
 
     @Autowired
     private BoekService boekService;
@@ -46,12 +48,22 @@ public class UitlenenBoekController {
                                            @RequestParam String datumUitlening) {
         ModelAndView mav = null;
         Student student = studentService.getStudentByLidnummer(lidnummer);
+        LocalDate parsedDatum = LocalDate.parse(datumUitlening);
+        LocalDate maxLeningDatum = parsedDatum.plusDays(MAX_UITLENEN_DATUM);
+        mav = getModelAndView(isbn, datumUitlening, student, maxLeningDatum);
+        return mav;
+    }
+
+    private ModelAndView getModelAndView(@RequestParam int isbn, @RequestParam String datumUitlening,
+                                         Student student, LocalDate maxLeningDatum) {
+        ModelAndView mav;
         if (boekService.isValidIsdn(isbn)) {
             mav = new ModelAndView("uitlenen_opslaan");
-            Boek boek = boekService.getBoekByIsdn(isbn);
+            Boek boek = boekService.getBoekByIsbn(isbn);
             boek.setGeleend(true);
             mav.addObject("student", student);
-            Uitlenen uitlenen = new Uitlenen(datumUitlening, null, boek, student);
+            Uitlenen uitlenen = new Uitlenen(datumUitlening, null, maxLeningDatum.toString(),
+                                             boek, student);
             uitlenenService.save(uitlenen);
         } else {
             mav = getErrorBericht(student);
@@ -88,14 +100,34 @@ public class UitlenenBoekController {
     public ModelAndView boekTerugBrengenHandler(@RequestParam String datumTerugGebracht, @RequestParam int isbn) {
         ModelAndView mav = new ModelAndView("terugbrengen_boek_opslaan");
 
-        Boek boek = boekService.getBoekByIsdn(isbn);
-        Uitlenen uitlenen = uitlenenService.findByBoek(boek);
+        Boek boek = boekService.getBoekByIsbn(isbn);
+        Uitlenen uitlenen = uitlenenService.findByBoekId(boek.getId());
         uitlenen.setDatumTerugGebracht(datumTerugGebracht);
         uitlenenService.terugbrengenBoek(uitlenen);
         mav.addObject("uitlenen",uitlenen);
         return mav;
 
     }
+
+    @GetMapping("/boek_verlengen")
+    public ModelAndView handelVerlengenBoek() {
+        ModelAndView mav = new ModelAndView("verlengen_boek");
+        mav.addObject("boek", new Boek());
+        return mav;
+    }
+
+    @PostMapping("/boek_verlengen_opslaan")
+    public ModelAndView boekTerugBrengenHandler(@RequestParam int isbn) {
+        ModelAndView mav = new ModelAndView("verlengen_boek_opslaan");
+        Boek boek = boekService.getBoekByIsbn(isbn);
+        Uitlenen uitlenen = uitlenenService.findByBoekId(boek.getId());
+        String nieuweMaxLeningDatum = uitlenenService.verlengenBoek(uitlenen);
+        mav.addObject("nieuweMaxLeningDatum",nieuweMaxLeningDatum);
+        return mav;
+
+    }
+
+
 
 
 }

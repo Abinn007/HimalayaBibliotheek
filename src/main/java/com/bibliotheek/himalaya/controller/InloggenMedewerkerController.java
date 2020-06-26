@@ -26,12 +26,6 @@ public class InloggenMedewerkerController {
     public InloggenMedewerkerController(MedewerkerService medewerkerService){
         this.medewerkerService = medewerkerService;
     }
-    //        MedewerkerLoginBackingBean backingBean = new MedewerkerLoginBackingBean();
-//        mav.addObject("backingBean", backingBean);
-//        Medewerker medewerker = new Medewerker("A","sariga","sarigas","12345");
-//        medewerkerService.saveMedewerker(medewerker);
-
-
 
     @PostMapping("/login_medewerker")
     public ModelAndView HandelHoofdpagina(@RequestParam String gebruikersnaam, @RequestParam String wachtwoord) {
@@ -42,7 +36,8 @@ public class InloggenMedewerkerController {
             mav = new ModelAndView("welkom_pagina");
             mav.addObject("medewerker",currentMedewerker);
         }else{
-            mav = new ModelAndView("mislukt_inloggen");
+            mav = new ModelAndView("medewerker_login");
+            mav.addObject("medewerker", new Medewerker());
             mav.addObject("login_error","Gebruikersnaam of/en wacthwoord onjuist ! ");
         }
         return mav;

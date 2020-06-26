@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bevestiging boek terugbrengen</title>
+    <title>Bevestiging boek verlengen</title>
     <link rel="stylesheet" type="text/css" th:href="@{css/lid_registreren.css}">
 </head>
 <body>
 <h1> Himalaya Bibliotheek</h1>
 <form>
-    <h2> Bevestiging boek terugbrengen </h2>
-    <p>Terugbrengen is uitgevoerd</p>
+    <h2> De uitlening datum is verlengd</h2>
+    <p>De nieuwe maximum uitlening datum is:<br><span th:text="${nieuweMaxLeningDatum}"></span></p>
     <div class="button_position">
     <button class="button" style="background-color: tomato" formaction="\" name="afsluiten" value="Afsluiten"
             type="submit">Afsluiten</button>

@@ -16,7 +16,7 @@ public class BoekService {
         this.boekRepository = boekRepository;
     }
 
-    public Boek getBoekByIsdn(int isbn){
+    public Boek getBoekByIsbn(int isbn){
         return boekRepository.findBoekByIsbn(isbn);
     }
 

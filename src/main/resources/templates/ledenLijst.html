@@ -20,9 +20,9 @@
             <tr style="background-color:darkseagreen;color:white;font-size: 17px">
                 <th>S.nr.</th>
                 <th style="text-align: left">Lidnummer</th>
-                <th>geboortedatum</th>
-                <th>naam</th>
-                <th>studentNr</th>
+                <th>Geboortedatum</th>
+                <th>Naam</th>
+                <th>StudentNr</th>
             </tr>
             <tr th:each="student,iterationStatus: ${ledenLijst}">
                 <td style="text-align: center" th:text="${iterationStatus.count}"></td>
