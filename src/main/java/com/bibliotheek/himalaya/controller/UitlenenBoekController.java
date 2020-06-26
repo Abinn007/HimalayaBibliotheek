@@ -29,22 +29,23 @@ public class UitlenenBoekController {
     public ModelAndView handelUitlenenBoek(@RequestParam("lidnummer") int lidnummer) {
         ModelAndView mav = new ModelAndView("uitlenen_boek");
         Student student = studentService.getStudentByLidnummer(lidnummer);
-        mav.addObject("uitlenen",new Uitlenen());
-        mav.addObject("student",student);
+        mav.addObject("uitlenen", new Uitlenen());
+        mav.addObject("student", student);
         mav.addObject("boek", new Boek());
         return mav;
     }
+
     @GetMapping("/uitlenenBoek")
     public ModelAndView handelUitlenenBoek() {
         ModelAndView mav = new ModelAndView("uitlenen_boek");
-        mav.addObject("uitlenen",new Uitlenen());
-        mav.addObject("student",new Student());
+        mav.addObject("uitlenen", new Uitlenen());
+        mav.addObject("student", new Student());
         mav.addObject("boek", new Boek());
         return mav;
     }
 
     @PostMapping("/uitlenen_afgerond")
-    public ModelAndView handelUitlenenBoek(@RequestParam int isbn,@RequestParam int lidnummer,
+    public ModelAndView handelUitlenenBoek(@RequestParam int isbn, @RequestParam int lidnummer,
                                            @RequestParam String datumUitlening) {
         ModelAndView mav = null;
         Student student = studentService.getStudentByLidnummer(lidnummer);
@@ -63,7 +64,7 @@ public class UitlenenBoekController {
             boek.setGeleend(true);
             mav.addObject("student", student);
             Uitlenen uitlenen = new Uitlenen(datumUitlening, null, maxLeningDatum.toString(),
-                                             boek, student);
+                    boek, student);
             uitlenenService.save(uitlenen);
         } else {
             mav = getErrorBericht(student);
@@ -74,9 +75,9 @@ public class UitlenenBoekController {
     private ModelAndView getErrorBericht(Student student) {
         ModelAndView mav;
         mav = new ModelAndView("uitlenen_boek");
-        mav.addObject("uitlenen",new Uitlenen());
-        mav.addObject("boek",new Boek());
-        mav.addObject("student",student);
+        mav.addObject("uitlenen", new Uitlenen());
+        mav.addObject("boek", new Boek());
+        mav.addObject("student", student);
         mav.addObject("error", "Er is geen boek met dit isbn!");
         return mav;
     }
@@ -91,7 +92,7 @@ public class UitlenenBoekController {
     @GetMapping("/boek_terugbrengen")
     public ModelAndView handelTerugbrengenBoek() {
         ModelAndView mav = new ModelAndView("terugbrengen_boek");
-        mav.addObject("uitlenen",new Uitlenen());
+        mav.addObject("uitlenen", new Uitlenen());
         mav.addObject("boek", new Boek());
         return mav;
     }
@@ -104,7 +105,7 @@ public class UitlenenBoekController {
         Uitlenen uitlenen = uitlenenService.findByBoekId(boek.getId());
         uitlenen.setDatumTerugGebracht(datumTerugGebracht);
         uitlenenService.terugbrengenBoek(uitlenen);
-        mav.addObject("uitlenen",uitlenen);
+        mav.addObject("uitlenen", uitlenen);
         return mav;
 
     }
@@ -122,12 +123,10 @@ public class UitlenenBoekController {
         Boek boek = boekService.getBoekByIsbn(isbn);
         Uitlenen uitlenen = uitlenenService.findByBoekId(boek.getId());
         String nieuweMaxLeningDatum = uitlenenService.verlengenBoek(uitlenen);
-        mav.addObject("nieuweMaxLeningDatum",nieuweMaxLeningDatum);
+        mav.addObject("nieuweMaxLeningDatum", nieuweMaxLeningDatum);
         return mav;
 
     }
-
-
 
 
 }

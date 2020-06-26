@@ -4,9 +4,9 @@ import com.bibliotheek.himalaya.model.Boek;
 import com.bibliotheek.himalaya.model.Uitlenen;
 import com.bibliotheek.himalaya.repositories.UitlenenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
@@ -30,12 +30,8 @@ public class UitlenenService {
         uitlenenRepository.save(uitlenen);
     }
 
-    public List<Uitlenen> getAllUitlenen(){
+    public List<Uitlenen> getAllUitlenen() {
         return uitlenenRepository.findAll();
-    }
-
-    public Uitlenen findByBoek(Boek boek){
-        return uitlenenRepository.findByBoek(boek);
     }
 
     @Transactional
@@ -46,7 +42,7 @@ public class UitlenenService {
         em.persist(uitlenen);
     }
 
-    public Uitlenen findByBoekId (int boekId) {
+    public Uitlenen findByBoekId(int boekId) {
         List<Uitlenen> uitlenenList = uitlenenRepository.findByBoekId(boekId);
         Uitlenen uitlenen = null;
         for (Uitlenen value : uitlenenList) {
@@ -62,13 +58,12 @@ public class UitlenenService {
     @Transactional
     public String verlengenBoek(Uitlenen uitlenen) {
         LocalDate parsedDatum = LocalDate.parse(uitlenen.getDatumMaxUitlenen());
-        String nieuweMaxLeningDatum =(parsedDatum.plusDays(MAX_UITLENEN_DATUM)).toString();
+        String nieuweMaxLeningDatum = (parsedDatum.plusDays(MAX_UITLENEN_DATUM)).toString();
         uitlenen.setDatumMaxUitlenen(nieuweMaxLeningDatum);
         save(uitlenen);
         em.persist(uitlenen);
         return nieuweMaxLeningDatum;
     }
-
 
 
 }
