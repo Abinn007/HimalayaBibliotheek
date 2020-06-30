@@ -10,7 +10,7 @@
 <center>
     <h1> Himalaya Bibliotheek</h1>
 
-<form th:action="@{/opslaan_boek}" method="post" th:object="${boek}">
+<form th:action="@{/opslaan_boek}" method="post" th:object="${boek}"><br>
     <h2> Boek toevoegen</h2>
     <label>Title</label><br>
     <input required th:field="*{title}"><br>

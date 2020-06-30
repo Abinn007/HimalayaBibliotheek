@@ -12,6 +12,7 @@ body{
     line-height: 1.6;
     min-height: 100vh;
     color: white;
+    text-align: center;
 }
 form {
     width: 400px;
@@ -20,7 +21,7 @@ form {
     border-radius: 8px;
     box-shadow: 0 0 40px -10px #000;
     margin: calc(15vh - 220px) auto;
-    padding: 40px 60px;
+    padding: 20px 60px;
     max-width: calc(100vw - 40px);
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
@@ -30,7 +31,7 @@ form {
 }
 input {
     padding: 15px;
-    margin: 5px 0 25px 0;
+    margin: 5px 0 20px 0;
     display: inline-block;
     border: none;
     background: #f1f1f1;
@@ -52,7 +53,7 @@ input:focus{
     color: #fff;
     position: relative;
     display: inline-block;
-    margin: 20px 10px;
+    margin: 30px 10px;
     padding: 6px 12px;
     font-size: 14px;
     font-weight: 600;
@@ -70,7 +71,16 @@ input:focus{
     text-align: center;
 }
 h2{
-    color:darkblue;
-    padding: 6px 12px;
+    text-align: center;
+    color: aliceblue;
+    background-color:gray;
+    padding: 8px 20px;
+    margin: 10px 2px;
+    margin-bottom: 40px;
+    border-radius: 5px;
+    font-size: 25px;
 
 }
+label{
+    color: black;
+   }
