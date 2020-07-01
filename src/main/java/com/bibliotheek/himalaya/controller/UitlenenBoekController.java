@@ -27,9 +27,10 @@ public class UitlenenBoekController {
 
     @GetMapping("/uitlenen_boek")
     public ModelAndView handelUitlenenBoek(@RequestParam("lidnummer") int lidnummer) {
-        ModelAndView mav = new ModelAndView("uitlenen_boek");
+        ModelAndView mav = new ModelAndView("uitlenen_boek_nieuw_lid");
         Student student = studentService.getStudentByLidnummer(lidnummer);
         mav.addObject("uitlenen", new Uitlenen());
+        mav.addObject("lidnummer", lidnummer);
         mav.addObject("student", student);
         mav.addObject("boek", new Boek());
         return mav;
@@ -45,9 +46,9 @@ public class UitlenenBoekController {
     }
 
     @PostMapping("/uitlenen_afgerond")
-    public ModelAndView handelUitlenenBoek(@RequestParam int isbn, @RequestParam int lidnummer,
+    public ModelAndView handelUitlenenBoek(@RequestParam String isbn, @RequestParam int lidnummer,
                                            @RequestParam String datumUitlening) {
-        ModelAndView mav = null;
+        ModelAndView mav;
         Student student = studentService.getStudentByLidnummer(lidnummer);
         LocalDate parsedDatum = LocalDate.parse(datumUitlening);
         LocalDate maxLeningDatum = parsedDatum.plusDays(MAX_UITLENEN_DATUM);
@@ -55,14 +56,13 @@ public class UitlenenBoekController {
         return mav;
     }
 
-    private ModelAndView getModelAndView(@RequestParam int isbn, @RequestParam String datumUitlening,
+    private ModelAndView getModelAndView(@RequestParam String isbn, @RequestParam String datumUitlening,
                                          Student student, LocalDate maxLeningDatum) {
         ModelAndView mav;
-        if (boekService.isValidIsdn(isbn)) {
+        if (boekService.isBeschikbaar(isbn)) {
             mav = new ModelAndView("uitlenen_opslaan");
             Boek boek = boekService.getBoekByIsbn(isbn);
             boek.setGeleend(true);
-            mav.addObject("student", student);
             Uitlenen uitlenen = new Uitlenen(datumUitlening, null, maxLeningDatum.toString(),
                     boek, student);
             uitlenenService.save(uitlenen);
@@ -78,7 +78,7 @@ public class UitlenenBoekController {
         mav.addObject("uitlenen", new Uitlenen());
         mav.addObject("boek", new Boek());
         mav.addObject("student", student);
-        mav.addObject("error", "Er is geen boek met dit isbn!");
+        mav.addObject("error", "Dit boek is niet beschikbaar !");
         return mav;
     }
 
@@ -98,16 +98,28 @@ public class UitlenenBoekController {
     }
 
     @PostMapping("/boek_terugbrengen_opslaan")
-    public ModelAndView boekTerugBrengenHandler(@RequestParam String datumTerugGebracht, @RequestParam int isbn) {
-        ModelAndView mav = new ModelAndView("terugbrengen_boek_opslaan");
+    public ModelAndView boekTerugBrengenHandler(@RequestParam String datumTerugGebracht, @RequestParam String isbn) {
+        ModelAndView mav;
+        if (boekService.isUitgeleend(isbn)) {
+            mav = getOpslaanTerugbrengenMAV(datumTerugGebracht, isbn);
+        } else {
+            mav = new ModelAndView("terugbrengen_boek");
+            mav.addObject("uitlenen", new Uitlenen());
+            mav.addObject("boek", new Boek());
+            mav.addObject("error", "Het BSN klopt niet !");
+        }
+        return mav;
 
+    }
+
+    private ModelAndView getOpslaanTerugbrengenMAV(@RequestParam String datumTerugGebracht, @RequestParam String isbn) {
+        ModelAndView mav;
+        mav = new ModelAndView("terugbrengen_boek_opslaan");
         Boek boek = boekService.getBoekByIsbn(isbn);
         Uitlenen uitlenen = uitlenenService.findByBoekId(boek.getId());
         uitlenen.setDatumTerugGebracht(datumTerugGebracht);
         uitlenenService.terugbrengenBoek(uitlenen);
-        mav.addObject("uitlenen", uitlenen);
         return mav;
-
     }
 
     @GetMapping("/boek_verlengen")
@@ -117,16 +129,37 @@ public class UitlenenBoekController {
         return mav;
     }
 
-    @PostMapping("/boek_verlengen_opslaan")
-    public ModelAndView boekTerugBrengenHandler(@RequestParam int isbn) {
-        ModelAndView mav = new ModelAndView("verlengen_boek_opslaan");
-        Boek boek = boekService.getBoekByIsbn(isbn);
-        Uitlenen uitlenen = uitlenenService.findByBoekId(boek.getId());
-        String nieuweMaxLeningDatum = uitlenenService.verlengenBoek(uitlenen);
-        mav.addObject("nieuweMaxLeningDatum", nieuweMaxLeningDatum);
-        return mav;
 
+    @PostMapping("/boek_verlengen_opslaan")
+    public ModelAndView boekTerugBrengenHandler(@RequestParam String isbn) {
+        ModelAndView mav;
+        if (boekService.isUitgeleend(isbn)) {
+            mav = opslaanBoekVerlengenMAV(isbn);
+        } else {
+            mav = getErrorMAV("Het ISBN klopt niet !");
+        }
+        return mav;
     }
 
+    private ModelAndView opslaanBoekVerlengenMAV(@RequestParam String isbn) {
+        ModelAndView mav;
+        mav = new ModelAndView("verlengen_boek_opslaan");
+        Boek boek = boekService.getBoekByIsbn(isbn);
+        Uitlenen uitlenen = uitlenenService.findByBoekId(boek.getId());
+        if (uitlenenService.uitgeleendDagen(uitlenen.getId()) <= 15) {
+            String nieuweMaxLeningDatum = uitlenenService.verlengenBoek(uitlenen);
+            mav.addObject("nieuweMaxLeningDatum", nieuweMaxLeningDatum);
+        } else {
+            mav = getErrorMAV("Het is al 1 keer verlengd !");
+        }
+        return mav;
+    }
 
+    private ModelAndView getErrorMAV(String error) {
+        ModelAndView mav;
+        mav = new ModelAndView("verlengen_boek");
+        mav.addObject("error", error);
+        mav.addObject("boek", new Boek());
+        return mav;
+    }
 }

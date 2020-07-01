@@ -23,18 +23,19 @@ public class ToevoegenLidController {
     @GetMapping("/toevoegen_lid")
     public ModelAndView handelToevoegenLid(){
         ModelAndView mav = new ModelAndView("lid_toevoegen");
-        Student student = new Student();
-        mav.addObject("nieuwStudent",student);
+        mav.addObject("nieuwStudent",new Student());
         return mav;
     }
 
     @PostMapping("/opslaan_lid")
     public ModelAndView lidToevoegenHandler(@RequestParam int student_nr, @RequestParam String naam,
                                             @RequestParam String geboortedatum){
-        ModelAndView mav = new ModelAndView("lid_registreren");
+        ModelAndView mav;
         Student student = new Student(student_nr,naam,geboortedatum);
         if (studentService.isBestaandeStudent(student_nr)){
-            mav = new ModelAndView("lid_registreren_error");
+            mav = new ModelAndView("lid_toevoegen");
+            mav.addObject("nieuwStudent", student);
+            mav.addObject("error", "Er bestaat al een lid met dit student nr.!");
         }else {
             mav = new ModelAndView("lid_registreren");
             studentService.saveStudent(student);

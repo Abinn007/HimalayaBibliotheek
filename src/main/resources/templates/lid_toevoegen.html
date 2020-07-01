@@ -18,6 +18,9 @@
     <input required th:field="*{naam}">
     <label>Geboortedatum</label>
     <input required type="date" th:field="*{geboortedatum}">
+    <div style="font-size: 14px;color: red; font-weight: bold">
+        <span th:text="${error}"></span>
+    </div>
 
     <div class="button_position">
         <button class="button" style="background-color: tomato" name="terug" type="button" onclick="history.back()">Annuleren</button>

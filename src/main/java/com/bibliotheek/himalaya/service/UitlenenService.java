@@ -66,4 +66,9 @@ public class UitlenenService {
     }
 
 
+    public int uitgeleendDagen(int uitlenenId){
+        return uitlenenRepository.findUitleningDagen(uitlenenId);
+    }
+
+
 }

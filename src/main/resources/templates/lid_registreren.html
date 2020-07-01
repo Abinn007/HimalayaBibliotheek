@@ -9,13 +9,13 @@
 <h1> Himalaya Bibliotheek</h1>
 <form th:action="@{/uitlenen_boek}" th:method="get" th:object="${student}">
     <h2> Bevestiging van inschrijving</h2>
-    <p>Lid is toegevoegd, lidnummer is: <span th:text="${student.getLidnummer()}"> </span></p>
+    <p>Lid is toegevoegd, lidnummer is: <span th:text="${student.lidnummer}"> </span></p>
     <div class="button_position">
     <button class="button" style="background-color: tomato" formaction="\" name="afsluiten" value="Afsluiten"
             type="submit">Afsluiten
     </button>
     <button class="button" style="background-color: #4CAF50;"  name="submit"
-            value="boeklenen" type="submit"><a th:href="@{/uitlenen_boek(lidnummer=${student.getLidnummer()})}">
+            value="boeklenen" type="submit"><a th:href="@{/uitlenen_boek(lidnummer=${student.lidnummer})}">
             Boek lenen</a></button>
 </div>
 

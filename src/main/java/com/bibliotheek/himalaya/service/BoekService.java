@@ -16,11 +16,11 @@ public class BoekService {
         this.boekRepository = boekRepository;
     }
 
-    public Boek getBoekByIsbn(int isbn){
+    public Boek getBoekByIsbn(String isbn){
         return boekRepository.findBoekByIsbn(isbn);
     }
 
-    public boolean isValidIsdn(int isbn) {
+    public boolean isBestaandIsbn(String isbn) {
         return boekRepository.findBoekByIsbn(isbn) != null;
     }
 
@@ -41,5 +41,13 @@ public class BoekService {
     }
     public  List<Boek> nietGeleendBoekenLijst() {
         return boekRepository.nietGeleendBoekenLijst();
+    }
+
+    public boolean isBeschikbaar(String isbn) {
+        return boekRepository.findBoekByIsbnAndGeleendIsFalse(isbn) != null;
+    }
+
+    public boolean isUitgeleend(String isbn) {
+        return boekRepository.findBoekByIsbnAndGeleendIsTrue(isbn) != null;
     }
 }

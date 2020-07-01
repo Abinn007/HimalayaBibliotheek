@@ -2,22 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Boek terugbrengen</title>
+    <title>Boek uitlenen</title>
     <link rel="stylesheet" type="text/css" th:href="@{css/uitlenen_boek.css}">
 </head>
 <body>
 <h1>Himalaya Bibliotheek</h1>
-<form th:action="@{/boek_terugbrengen_opslaan}" method="post"><br>
-    <h2>Boek terugbrengen</h2>
-
-    <label>Datum terug gebracht</label>
-    <input required id="currentdate" th:object="${uitlenen}" type="date" th:field="*{datumTerugGebracht}"><br>
+<form th:action="@{/uitlenen_afgerond}" method="post" th:object="${uitlenen}">
+    <h2>Boek uitlenen</h2>
+    <label>Lidnummer</label>
+    <input required th:object="${student}" th:field="*{lidnummer}"><br>
+    <label>Datum uitlening</label>
+    <input required id="currentdate" type="date" th:field="*{datumUitlening}"><br>
     <label>ISBN</label><br>
     <input required th:object="${boek}" th:field="*{isbn}">
     <div style="font-size: 16px;color: red">
         <span  th:utext="${error}"></span>
     </div>
-
     <div class="button_position">
         <button class="button" style="background-color: tomato"  onclick="history.back()">Annuleren</button>
         <button class="button" style="background-color: #28a745" name="submit" value="opslaan" type="submit">Opslaan</button>

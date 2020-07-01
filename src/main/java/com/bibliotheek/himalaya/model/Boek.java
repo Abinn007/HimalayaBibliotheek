@@ -10,7 +10,7 @@ public class Boek {
     @GeneratedValue
     private int id;
     private String title;
-    private int isbn;
+    private String isbn;
     private boolean geleend;
 
     @OneToMany(mappedBy = "boek", cascade = {CascadeType.ALL})
@@ -20,10 +20,10 @@ public class Boek {
     private List<Autor> autors;
 
     public Boek(){
-        this("",0);
+        this("",null);
     }
 
-    public Boek(String title, int isbn) {
+    public Boek(String title, String isbn) {
         this.title = title;
         this.isbn = isbn;
         this.geleend = false;
@@ -47,12 +47,12 @@ public class Boek {
         this.title = title;
     }
 
-    public int getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(int isdn) {
-        this.isbn = isdn;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public boolean isGeleend() {

@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository
 public interface BoekRepository extends JpaRepository<Boek, Integer> {
 
-    Boek findBoekByIsbn(int isbn);
+    Boek findBoekByIsbn(String isbn);
 
     @Query(value = "SELECT * FROM Boek WHERE geleend = true", nativeQuery = true)
     List<Boek> geleendBoekenLijst();
@@ -20,6 +21,10 @@ public interface BoekRepository extends JpaRepository<Boek, Integer> {
     List<Boek> nietGeleendBoekenLijst();
 
     void removeBoekByIsbn(int isbn);
+
+    Boek findBoekByIsbnAndGeleendIsFalse(String isbn);
+
+    Boek findBoekByIsbnAndGeleendIsTrue(String isbn);
 
 
 

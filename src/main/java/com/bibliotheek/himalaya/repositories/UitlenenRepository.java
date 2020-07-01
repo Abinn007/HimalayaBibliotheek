@@ -20,4 +20,10 @@ public interface UitlenenRepository extends JpaRepository<Uitlenen, Integer> {
 
 
     Uitlenen findByBoek(Boek boek);
+
+    @Query(value="SELECT datediff(datum_max_uitlenen, datum_uitlening)  \n" +
+            "FROM uitlenen \n" +
+            "WHERE id = :uitlenenId ", nativeQuery = true)
+
+    int findUitleningDagen (@Param("uitlenenId") int uitlenenId);
 }
