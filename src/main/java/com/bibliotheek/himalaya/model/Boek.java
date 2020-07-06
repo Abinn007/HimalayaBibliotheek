@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Boek")
+@Entity(name = "boek")
 public class Boek {
     @Id
     @GeneratedValue
@@ -16,7 +16,7 @@ public class Boek {
     @OneToMany(mappedBy = "boek", cascade = {CascadeType.ALL})
     private List<Uitlenen> uitlenenList;
 
-    @ManyToMany(mappedBy= "boeken")
+    @ManyToMany(mappedBy= "boeken", cascade = {CascadeType.ALL})
     private List<Autor> autors;
 
     public Boek(){
@@ -62,4 +62,13 @@ public class Boek {
     public void setGeleend(boolean geleend) {
         this.geleend = geleend;
     }
+
+    public List<Autor> getAutors() {
+        return autors;
+    }
+
+    public void setAutors(List<Autor> autors) {
+        this.autors = autors;
+    }
+
 }

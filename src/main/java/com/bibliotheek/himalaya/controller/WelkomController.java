@@ -12,7 +12,7 @@ public class WelkomController {
     public WelkomController() {
     }
 
-    @GetMapping("welkom_pagina")
+    @GetMapping("/welkom_pagina")
     public String welkomHandler(){
         return "welkom_pagina";
     }

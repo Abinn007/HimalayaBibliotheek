@@ -14,9 +14,9 @@ body{
     color: white;
     text-align: center;
 }
-form {
-    width: 400px;
-    height: 525px;
+.form {
+    width: 475px;
+    height: 600px;
     background: #e6e6e6;
     border-radius: 8px;
     box-shadow: 0 0 40px -10px #000;

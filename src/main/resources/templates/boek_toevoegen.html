@@ -3,28 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Boek toevoegen</title>
-    <link rel="stylesheet" type="text/css" th:href="@{css/lid_toevoegen.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/boek_toevoegen.css}">
 
 </head>
 <body>
 <center>
     <h1> Himalaya Bibliotheek</h1>
 
-<form th:action="@{/opslaan_boek}" method="post" th:object="${boek}"><br>
+<form class=form th:action="@{/opslaan_boek}" method="post" th:object="${boek}"><br>
     <h2> Boek toevoegen</h2>
     <label>Title</label><br>
     <input required th:field="*{title}"><br>
     <label>ISBN</label><br>
     <input required th:field="*{isbn}"><br>
-    <div style="font-size: 16px;color: red">
+    <label>Autors</label><br>
+    <div th:if="${autors_lijst != null and not #lists.isEmpty(autors_lijst)}">
+        <select style="width: 220px; padding: 15px; margin: 5px 0 20px 0; display: inline-block;
+        border: none; background: #f1f1f1; font-size: 14px;" th:field ="*{autors}" size="2" multiple="multiple">
+            <option th:each="dropDownItem : ${#lists.sort(autors_lijst)}"
+                    th:value="${dropDownItem.autor_id}"
+                    th:text="${dropDownItem.naam}"></option>
+        </select>
+    </div>
+    <div style="font-size: 14px;color: red">
         <span th:text="${error}"></span>
     </div>
+
     <div class="button_position">
         <button class="button" style="background-color: tomato" name="terug" type="button" onclick="history.back()">Annuleren</button>
         <button class="button" style="background-color: #28a745" name="submit" value="Inloggen" type="submit">Opslaan</button>
     </div>
+</form><br>
+    <form th:action="@{/toevoegen_autor}">
+        <button class="button" style="background-color: darkgrey" name="submit" value="Inloggen" type="submit">Nieuw Autor</button>
+    </form>
 
-</form>
 
 </center>
 

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Autor {
+public class Autor implements Comparable<Autor> {
     @Id
     @GeneratedValue
     private int autor_id;
@@ -37,4 +37,20 @@ public class Autor {
     public void setNaam(String naam) {
         this.naam = naam;
     }
+
+    public void toevoegenBoek(Boek boek){
+        boeken.add(boek);
+    }
+
+    @Override
+    public String toString() {
+        return autor_id + " " + naam + " " + boeken;
+    }
+
+
+    @Override
+    public int compareTo(Autor o) {
+        return this.naam.compareTo(o.naam);
+    }
+
 }
