@@ -68,7 +68,7 @@ public class ToevoegenBoekController {
         mav.addObject("boek", boek);
         return mav;
     }
-    @GetMapping("/toevoegen_autor")
+    @PostMapping("/toevoegen_autor")
     public ModelAndView toevoegenAutorHandler() {
         ModelAndView mav = new ModelAndView("autorToevoegen");
         mav.addObject("autor",new Autor());
