@@ -4,6 +4,7 @@ import com.bibliotheek.himalaya.model.Autor;
 import com.bibliotheek.himalaya.service.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,11 +28,18 @@ public class AutorController {
 }
 
 @PostMapping("/opslaanAutor")
-    public String opslaanAutorHandler(@RequestParam String naam){
+    public String opslaanAutorHandler(@RequestParam String naam, Model model){
         Autor autor = new Autor();
         autor.setNaam(naam);
-        autorService.saveAutor(autor);
-        return "autor_opslaan";
+        if(autorService.isBestaandAutor(naam)) {
+            model.addAttribute("error", "Deze autor bestaat al !");
+            model.addAttribute("autor",autor);
+            return "autor_toevoegen";
+        }else{
+            autorService.saveAutor(autor);
+            return "autor_opslaan";
+        }
+
 }
 
 }

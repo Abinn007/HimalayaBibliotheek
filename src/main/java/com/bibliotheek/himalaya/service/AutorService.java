@@ -20,4 +20,8 @@ public class AutorService {
     public List<Autor> getAll() {
         return autorRepository.findAll();
     }
+
+    public boolean isBestaandAutor(String naam){
+        return autorRepository.findByNaam(naam) != null;
+    }
 }

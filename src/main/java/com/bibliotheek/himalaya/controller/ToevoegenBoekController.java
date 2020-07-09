@@ -28,21 +28,21 @@ public class ToevoegenBoekController {
 
 
     @GetMapping("/toevoegen_boek")
-    public ModelAndView invoerenBoekHandler(){
+    public ModelAndView invoerenBoekHandler() {
         ModelAndView mav = new ModelAndView("boek_toevoegen");
         Boek boek = new Boek();
         List<Autor> autorList = autorService.getAll();
         mav.addObject("boek", boek);
         mav.addObject("autors_lijst", autorList);
-        mav.addObject("autor",new Autor());
+        mav.addObject("autor", new Autor());
         return mav;
     }
 
     @PostMapping("/opslaan_boek")
     public ModelAndView opslaanboekHandler(@RequestParam String title, @RequestParam String isbn,
-                                           @RequestParam List<Autor> autors, Model model ) {
+                                           @RequestParam List<Autor> autors) {
         ModelAndView mav;
-        Boek boek = new Boek(title,isbn);
+        Boek boek = new Boek(title, isbn);
         List<Autor> autorList = autorService.getAll();
         if (boekService.isBestaandIsbn(isbn)) {
             mav = new ModelAndView("boek_toevoegen");
@@ -68,24 +68,30 @@ public class ToevoegenBoekController {
         mav.addObject("boek", boek);
         return mav;
     }
+
     @PostMapping("/toevoegen_autor")
     public ModelAndView toevoegenAutorHandler() {
         ModelAndView mav = new ModelAndView("autorToevoegen");
-        mav.addObject("autor",new Autor());
+        mav.addObject("autor", new Autor());
         return mav;
     }
 
     @PostMapping("/opslaan_autor")
-    public ModelAndView opslaanAutorHandler(@RequestParam String naam){
-        ModelAndView mav = new ModelAndView("boek_toevoegen");
-        Autor autor = new Autor();
-        autor.setNaam(naam);
-        autorService.saveAutor(autor);
-        Boek boek = new Boek();
-        List<Autor> autorList = autorService.getAll();
-        mav.addObject("boek", boek);
-        mav.addObject("autors_lijst", autorList);
-        mav.addObject("autor",new Autor());
+    public ModelAndView opslaanAutorHandler(@RequestParam String naam) {
+        ModelAndView mav;
+        Autor autor = new Autor(naam);
+        if (autorService.isBestaandAutor(naam)) {
+            mav = new ModelAndView("autorToevoegen");
+            mav.addObject("error", "Deze autor bestaat al !");
+            mav.addObject("autor", autor);
+        } else {
+            autorService.saveAutor(autor);
+            mav = new ModelAndView("boek_toevoegen");
+            mav.addObject("autors_lijst", autorService.getAll());
+            mav.addObject("boek", new Boek());
+        }
+
         return mav;
     }
 }
+
