@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AutorController {
 
     @Autowired
-    private AutorService autorService;
+    private final AutorService autorService;
 
     public AutorController(AutorService autorService) {
         this.autorService = autorService;

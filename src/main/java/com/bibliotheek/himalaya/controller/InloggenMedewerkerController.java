@@ -27,7 +27,7 @@ public class InloggenMedewerkerController {
         this.medewerkerService = medewerkerService;
     }
 
-    @PostMapping("/login_medewerker")
+    @RequestMapping("/login_medewerker")
     public ModelAndView HandelHoofdpagina(@RequestParam String gebruikersnaam, @RequestParam String wachtwoord) {
         ModelAndView mav;
         Medewerker currentMedewerker = medewerkerService.getMedewerkerByGebruikersnaam(gebruikersnaam);
