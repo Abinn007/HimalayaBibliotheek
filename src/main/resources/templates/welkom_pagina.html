@@ -6,8 +6,12 @@
     <link rel="stylesheet" type="text/css" th:href="@{css/welkom_pagina.css}">
 </head>
 <body>
-<form>
-<h1> Menu</h1>
+<form class="form-loguit" th:action="@{logout}" method="post">
+    <h2 style="color: #0779e4" th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]</h2>
+    <button class="button-loguit" type="submit">Uitloggen</button>
+</form>
+<form class="form">
+<h1>Menu</h1>
     <button formaction="/toevoegenAutor" class="button"
             name="terug" value="terug" type="submit">Autor toevoegen</button>
         <button formaction="/toevoegen_boek" class="button"
@@ -30,10 +34,6 @@
                 name="terug" value="terug" type="submit">Beschikbaar boekenlijst</button>
         <button formaction="/uitlenigLijst" class="button"
                 name="terug" value="terug" type="submit">Overzicht geleendeboeken</button>
-    <div style="text-align: center">
-    <button formaction="/uitloggen" class="button button_position" type="submit">Uitloggen</button>
-    </div>
-
-</form>
+   </form>
 </body>
 </html>

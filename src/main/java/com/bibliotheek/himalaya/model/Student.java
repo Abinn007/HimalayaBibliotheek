@@ -13,10 +13,7 @@ public class Student {
     private String naam;
     private String geboortedatum;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    List<Boek> boeken;
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.ALL})
     List<Uitlenen> uitlenenList;
 
     //Constructors

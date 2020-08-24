@@ -27,12 +27,4 @@ public class HomeController {
         return "medewerker_login";
     }
 
-    @RequestMapping("/uitloggen")
-    public ModelAndView uitloggen(HttpServletRequest request, SessionStatus session, Model model) {
-        model.asMap().clear();
-        session.setComplete();
-        request.getSession().invalidate();
-        System.out.println("Session is closed.");
-        return new ModelAndView("medewerker_login");
-    }
 }

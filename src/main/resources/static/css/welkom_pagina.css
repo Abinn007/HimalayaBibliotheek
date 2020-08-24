@@ -22,11 +22,12 @@ h1{
 }
 
 .button{
+    width: 400px;
     border: none;
     color:white;
     position: relative;
     display: inline-block;
-    margin: 7px 10px;
+    margin: 5px 10px;
     padding: 10px 50px;
     font-size: 16px;
     font-weight: 600;
@@ -42,25 +43,53 @@ h1{
     opacity: 1;
 }
 
-.button_position{
-    background-color: tomato;
-    margin-top: 15px;
-    color: white;
+.button-loguit{
+    border: none;
+    color:white;
+    position: relative;
+    display: inline-block;
+    padding: 10px 10px;
     font-size: 14px;
-    padding: 10px 24px;
-    line-height: 20px;
-    opacity: 0.9;
-
+    font-weight: 600;
+    line-height: 15px;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    opacity: 0.8;
+    border-radius: 5px;
+    background-color: #0779e4;
+    margin-left: 420px;
+    margin-top: -110px;
+    text-align: right;
+}
+.button-loguit:hover{
+    opacity: 1;
 }
 
-form {
-    width: 500px;
-    height: 710px;
+.form {
+    width: 550px;
+    height: 620px;
     background: #e6e6e6;
     border-radius: 8px;
     box-shadow: 0 0 40px -10px #000;
-    margin: calc(15vh - 220px) auto;
+    margin: calc(15vh - 360px) auto;
     padding: 10px 60px;
+    max-width: calc(100vw - 40px);
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    position: relative;
+    margin-top: 200px;
+
+}
+.form-loguit {
+    width: 550px;
+    height: 60px;
+    background: #e6e6e6;
+    border-radius: 8px;
+    box-shadow: 0 0 40px -10px #000;
+    margin: calc(15vh - 306px) auto;
+    padding: 10px 20px;
     max-width: calc(100vw - 40px);
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
